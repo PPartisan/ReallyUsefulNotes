@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/app/1.basicsetup.iml" filepath="$PROJECT_DIR$/app/1.basicsetup.iml" />
-      <module fileurl="file://$PROJECT_DIR$/UsefulTextEditor.iml" filepath="$PROJECT_DIR$/UsefulTextEditor.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ReallyUsefulNotes.iml" filepath="$PROJECT_DIR$/ReallyUsefulNotes.iml" />
+      <module fileurl="file://$PROJECT_DIR$/basicsetup/basicsetup.iml" filepath="$PROJECT_DIR$/basicsetup/basicsetup.iml" />
     </modules>
   </component>
 </project>
