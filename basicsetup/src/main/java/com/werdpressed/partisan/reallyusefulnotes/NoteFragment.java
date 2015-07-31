@@ -1,4 +1,4 @@
-package com.werdpressed.partisan.usefultexteditor;
+package com.werdpressed.partisan.reallyusefulnotes;
 
 import android.app.Fragment;
 import android.os.Bundle;
