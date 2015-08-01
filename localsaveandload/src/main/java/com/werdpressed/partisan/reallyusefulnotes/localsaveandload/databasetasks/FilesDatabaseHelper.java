@@ -33,11 +33,6 @@ public class FilesDatabaseHelper extends SQLiteOpenHelper{
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE files " +
                 "(_id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, content TEXT);");
-
-        ContentValues cv = new ContentValues();
-        cv.put(TITLE, "ReallyUsefulNotes");
-        cv.put(CONTENT, "Welcome to Really Useful Notes!");
-        db.insert(TABLE, null, cv);
     }
 
     @Override

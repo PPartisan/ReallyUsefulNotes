@@ -12,9 +12,9 @@ public class SaveTask extends AsyncTask<String, Void, Void> {
     private WeakReference<Context> weakReference;
     private FilesDatabaseHelper db;
     private LoadTask lt;
-    private int keyId;
+    private long keyId;
 
-    public SaveTask(Context context, int keyId){
+    public SaveTask(Context context, long keyId){
         weakReference = new WeakReference<>(context);
         db = FilesDatabaseHelper.getInstance(weakReference.get());
         this.keyId = keyId;

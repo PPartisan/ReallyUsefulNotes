@@ -10,9 +10,9 @@ public class DeleteTask extends AsyncTask<Void, Void, Void> {
     private WeakReference<Context> weakReference;
     private FilesDatabaseHelper db;
     private LoadTask lt;
-    private int keyId;
+    private long keyId;
 
-    public DeleteTask(Context context, int keyId) {
+    public DeleteTask(Context context, long keyId) {
         weakReference = new WeakReference<>(context);
         db = FilesDatabaseHelper.getInstance(weakReference.get());
         this.keyId = keyId;

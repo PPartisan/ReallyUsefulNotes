@@ -1,17 +1,13 @@
 package com.werdpressed.partisan.reallyusefulnotes.localsaveandload;
 
 import android.app.Fragment;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ScrollView;
-
-import com.werdpressed.partisan.reallyusefulnotes.localsaveandload.databasetasks.LoadTask;
 
 public class NoteFragment extends Fragment {
 
@@ -24,11 +20,11 @@ public class NoteFragment extends Fragment {
     private EditText mEditText;
 
 
-    public static NoteFragment newInstance(int keyId, String title, String content) {
+    public static NoteFragment newInstance(long keyId, String title, String content) {
         NoteFragment frag = new NoteFragment();
         Bundle args = new Bundle();
 
-        args.putInt(KEY_ID, keyId);
+        args.putLong(KEY_ID, keyId);
         args.putString(TITLE_ID, title);
         args.putString(CONTENT_ID, content);
         frag.setArguments(args);
@@ -60,8 +56,8 @@ public class NoteFragment extends Fragment {
         return rootView;
     }
 
-    public int getKeyId(){
-        return getArguments().getInt(KEY_ID);
+    public long getKeyId(){
+        return getArguments().getLong(KEY_ID);
     }
 
     public String getTitle() {

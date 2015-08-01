@@ -8,6 +8,11 @@
     <string name="action_save_note">Save Note</string>
     <string name="action_delete_note">Delete Note</string>
 
+    <!-- Empty Data Fragment -->
+    <string name="edf_welcome">Welcome to Really Useful Notes!
+        \n\n
+        Press the \'+\' symbol to get started.</string>
+
     <!-- Add Note Dialog -->
     <string name="and_title">Add Note</string>
     <string name="and_title_prompt">Title</string>

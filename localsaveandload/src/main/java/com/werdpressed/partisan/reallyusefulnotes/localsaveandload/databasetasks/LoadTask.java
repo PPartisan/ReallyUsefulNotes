@@ -20,7 +20,7 @@ public class LoadTask extends AsyncTask<Void, Void, Cursor> {
     private AlertDialog dialog;
 
     public interface LoadComplete {
-        void cursorReady(Cursor cursor);
+        void loadComplete(Cursor cursor);
     }
 
     public LoadTask(Context context) {
@@ -50,7 +50,7 @@ public class LoadTask extends AsyncTask<Void, Void, Cursor> {
 
     @Override
     protected void onPostExecute(Cursor cursor) {
-        loadComplete.cursorReady(cursor);
+        loadComplete.loadComplete(cursor);
         dialog.dismiss();
     }
 
