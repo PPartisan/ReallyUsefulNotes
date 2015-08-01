@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity implements
     private long keyId;
     private String title, content;
 
-    private CursorStatus cursorStatus;
+    private CursorStatus cursorStatus = CursorStatus.DEFAULT;
 
     private enum CursorStatus {
         ADD, DELETE, NO_DATA, DEFAULT
