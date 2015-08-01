@@ -1,6 +1,5 @@
 package com.werdpressed.partisan.reallyusefulnotes.localsaveandload.databasetasks;
 
-import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
 import android.os.AsyncTask;

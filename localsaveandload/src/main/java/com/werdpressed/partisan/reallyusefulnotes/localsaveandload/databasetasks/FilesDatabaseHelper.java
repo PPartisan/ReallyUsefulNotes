@@ -1,5 +1,6 @@
 package com.werdpressed.partisan.reallyusefulnotes.localsaveandload.databasetasks;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -32,6 +33,11 @@ public class FilesDatabaseHelper extends SQLiteOpenHelper{
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE files " +
                 "(_id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, content TEXT);");
+
+        ContentValues cv = new ContentValues();
+        cv.put(TITLE, "ReallyUsefulNotes");
+        cv.put(CONTENT, "Welcome to Really Useful Notes!");
+        db.insert(TABLE, null, cv);
     }
 
     @Override

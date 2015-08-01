@@ -6,10 +6,15 @@
     <string name="action_add_note">Add Note</string>
     <string name="action_view_notes">View Notes</string>
     <string name="action_save_note">Save Note</string>
+    <string name="action_delete_note">Delete Note</string>
 
     <!-- Add Note Dialog -->
     <string name="and_title">Add Note</string>
     <string name="and_title_prompt">Title</string>
+
+    <!-- Delete Note Dialog -->
+    <string name="dnd_title">Delete Confirmation</string>
+    <string name="dnd_content">Confirm Delete for %s?</string>
 
     <!-- System -->
     <string name="loading">Loading&#8230;</string>

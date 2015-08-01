@@ -1,22 +1,21 @@
 package com.werdpressed.partisan.reallyusefulnotes.localsaveandload.databasetasks;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import java.lang.ref.WeakReference;
 
-
-public class AddTask extends AsyncTask<String, Void, Void> {
+public class DeleteTask extends AsyncTask<Void, Void, Void> {
 
     private WeakReference<Context> weakReference;
     private FilesDatabaseHelper db;
     private LoadTask lt;
+    private int keyId;
 
-    public AddTask(Context context){
+    public DeleteTask(Context context, int keyId) {
         weakReference = new WeakReference<>(context);
         db = FilesDatabaseHelper.getInstance(weakReference.get());
+        this.keyId = keyId;
     }
 
     @Override
@@ -26,12 +25,10 @@ public class AddTask extends AsyncTask<String, Void, Void> {
     }
 
     @Override
-    protected Void doInBackground(String... params) {
-        ContentValues cv = new ContentValues();
-        cv.put(FilesDatabaseHelper.TITLE, params[0]);
-        long id = db.getWritableDatabase().insert(FilesDatabaseHelper.TABLE, null, cv);
-        Log.e("AddTask", "value is " + id);
+    protected Void doInBackground(Void... params) {
+        db.getWritableDatabase().delete(FilesDatabaseHelper.TABLE,
+                FilesDatabaseHelper.KEY_ID + "=?",
+                new String[] { String.valueOf(keyId) });
         return null;
     }
-
 }

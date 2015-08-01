@@ -15,6 +15,7 @@ import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
 
 import com.werdpressed.partisan.reallyusefulnotes.localsaveandload.databasetasks.AddTask;
+import com.werdpressed.partisan.reallyusefulnotes.localsaveandload.databasetasks.DeleteTask;
 import com.werdpressed.partisan.reallyusefulnotes.localsaveandload.databasetasks.FilesDatabaseHelper;
 import com.werdpressed.partisan.reallyusefulnotes.localsaveandload.databasetasks.LoadTask;
 import com.werdpressed.partisan.reallyusefulnotes.localsaveandload.databasetasks.SaveTask;
@@ -27,6 +28,7 @@ public class MainActivity extends AppCompatActivity implements LoadTask.LoadComp
     private AddTask at = null;
     private LoadTask lt = null;
     private SaveTask st = null;
+    private DeleteTask dt = null;
 
     private Cursor data = null;
 
@@ -44,19 +46,11 @@ public class MainActivity extends AppCompatActivity implements LoadTask.LoadComp
         setContentView(R.layout.activity_main);
 
         if (data == null) {
+            loadingDialog = loadingDialog();
+            loadingDialog.show();
             lt = new LoadTask(this);
             lt.execute();
         }
-
-        /*if (getFragmentManager().findFragmentById(R.id.note_fragment_container) == null) {
-            mNoteFragment = NoteFragment.newInstance(0, null, null);
-            getFragmentManager()
-                    .beginTransaction()
-                    .add(R.id.note_fragment_container, mNoteFragment, NOTE_TAG)
-                    .commit();
-        }*/
-        loadingDialog = loadingDialog();
-        loadingDialog.show();
     }
 
     @Override
@@ -93,6 +87,9 @@ public class MainActivity extends AppCompatActivity implements LoadTask.LoadComp
             case R.id.action_view_notes:
                 buildViewNoteDialog().show();
                 break;
+            case R.id.action_delete_notes:
+                deleteDialog().show();
+                break;
         }
 
         return super.onOptionsItemSelected(item);
@@ -105,18 +102,22 @@ public class MainActivity extends AppCompatActivity implements LoadTask.LoadComp
     @Override
     public void cursorReady(Cursor cursor) {
         data = cursor;
+
         if (loadingDialog.isShowing()) loadingDialog.dismiss();
 
-        if (getFragmentManager().findFragmentById(R.id.note_fragment_container) == null) {
-            data.moveToFirst();
-            keyId = data.getInt(data.getColumnIndex(FilesDatabaseHelper.KEY_ID));
-            title = data.getString(data.getColumnIndex(FilesDatabaseHelper.TITLE));
-            content = data.getString(data.getColumnIndex(FilesDatabaseHelper.CONTENT));
-            getFragmentManager()
-                    .beginTransaction()
-                    .add(R.id.note_fragment_container, NoteFragment.newInstance(keyId, title, content))
-                    .addToBackStack(null)
-                    .commit();
+        mNoteFragment = (NoteFragment) getFragmentManager().findFragmentById(R.id.note_fragment_container);
+
+        if (mNoteFragment == null) {
+            if (data.moveToFirst()) {
+                keyId = data.getInt(data.getColumnIndex(FilesDatabaseHelper.KEY_ID));
+                title = data.getString(data.getColumnIndex(FilesDatabaseHelper.TITLE));
+                content = data.getString(data.getColumnIndex(FilesDatabaseHelper.CONTENT));
+                getFragmentManager()
+                        .beginTransaction()
+                        .add(R.id.note_fragment_container, NoteFragment.newInstance(keyId, title, content))
+                        .addToBackStack(null)
+                        .commit();
+            }
         }
     }
 
@@ -168,6 +169,22 @@ public class MainActivity extends AppCompatActivity implements LoadTask.LoadComp
         builder.setTitle(getString(R.string.app_name));
         builder.setIcon(R.mipmap.ic_launcher);
         builder.setMessage(getString(R.string.loading));
+        return builder.create();
+    }
+
+    private AlertDialog deleteDialog(){
+        mNoteFragment = (NoteFragment) getFragmentManager().findFragmentById(R.id.note_fragment_container);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AlertDialogStyle);
+
+        builder.setTitle(R.string.dnd_title);
+        builder.setMessage(getString(R.string.dnd_content, mNoteFragment.getTitle()));
+        builder.setPositiveButton(R.string.accept, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dt = new DeleteTask(MainActivity.this, mNoteFragment.getKeyId());
+                dt.execute();
+            }
+        });
         return builder.create();
     }
 
