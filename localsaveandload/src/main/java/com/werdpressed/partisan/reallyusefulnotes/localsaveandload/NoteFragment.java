@@ -1,21 +1,50 @@
 package com.werdpressed.partisan.reallyusefulnotes.localsaveandload;
 
 import android.app.Fragment;
+import android.database.Cursor;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ScrollView;
 
+import com.werdpressed.partisan.reallyusefulnotes.localsaveandload.databasetasks.LoadTask;
+
 public class NoteFragment extends Fragment {
 
-    View rootView;
-    ScrollView mScrollView;
-    EditText mEditText;
+    private static final String KEY_ID = "key_id";
+    private static final String TITLE_ID = "title_id";
+    private static final String CONTENT_ID = "content_id";
 
-    public static NoteFragment newInstance() {
-        return new NoteFragment();
+    private View rootView;
+    private ScrollView mScrollView;
+    private EditText mEditText;
+
+
+    public static NoteFragment newInstance(int keyId, String title, String content) {
+        NoteFragment frag = new NoteFragment();
+        Bundle args = new Bundle();
+
+        args.putInt(KEY_ID, keyId);
+        args.putString(TITLE_ID, title);
+        args.putString(CONTENT_ID, content);
+        frag.setArguments(args);
+
+        return frag;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        setRetainInstance(true);
+
+        if (getTitle() != null) {
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(getTitle());
+        }
     }
 
     @Override
@@ -26,7 +55,35 @@ public class NoteFragment extends Fragment {
         mScrollView = (ScrollView) rootView.findViewById(R.id.note_fragment_parent);
 
         mEditText = (EditText) rootView.findViewById(R.id.note_fragment_edit_text);
+        mEditText.setText(getContent());
 
         return rootView;
     }
+
+    public int getKeyId(){
+        return getArguments().getInt(KEY_ID);
+    }
+
+    public String getTitle() {
+        return getArguments().getString(TITLE_ID);
+    }
+
+    private String getContent(){
+        return getArguments().getString(CONTENT_ID);
+    }
+
+    public String getCurrentText() {
+        return mEditText.getText().toString();
+    }
+
+    public void setContent(String newText) {
+        mEditText.setText(newText);
+    }
+
+    public void setTitle(String newTitle) {
+        if (getTitle() != null) {
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(getTitle());
+        }
+    }
+
 }
