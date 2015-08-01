@@ -149,6 +149,20 @@ public class MainActivity extends AppCompatActivity implements
                             .commit();
                 }
                 break;
+            case DEFAULT:
+                if (mNoteFragment != null) {
+                    break;
+                } else {
+                    data.moveToFirst();
+                    keyId = data.getInt(data.getColumnIndex(FilesDatabaseHelper.KEY_ID));
+                    title = data.getString(data.getColumnIndex(FilesDatabaseHelper.TITLE));
+                    content = data.getString(data.getColumnIndex(FilesDatabaseHelper.CONTENT));
+                    getFragmentManager()
+                            .beginTransaction()
+                            .add(R.id.note_fragment_container, NoteFragment.newInstance(keyId, title, content))
+                            .addToBackStack(null)
+                            .commit();
+                }
             case DELETE:
                 data.moveToFirst();
                 keyId = data.getInt(data.getColumnIndex(FilesDatabaseHelper.KEY_ID));
