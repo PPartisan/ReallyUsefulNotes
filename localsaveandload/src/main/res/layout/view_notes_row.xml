@@ -9,6 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/vnr_text_view"
+        android:textStyle="bold"
         android:gravity="center_vertical"
         android:layout_marginLeft="@dimen/material_row_left_margin_text"
         android:layout_marginStart="@dimen/material_row_left_margin_text"
