@@ -3,7 +3,6 @@ package com.werdpressed.partisan.reallyusefulnotes.localsaveandload.databasetask
 import android.content.ContentValues;
 import android.content.Context;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import java.lang.ref.WeakReference;
 
@@ -37,8 +36,6 @@ public class SaveTask extends AsyncTask<String, Void, Void> {
                 cv,
                 FilesDatabaseHelper.KEY_ID + "=?",
                 new String[] { String.valueOf(keyId) });
-
-        Log.e("SaveTask", "value is " + id);
 
         return null;
     }

@@ -104,6 +104,7 @@ public class MainActivity extends AppCompatActivity implements
                 buildViewNoteDialog().show();
                 break;
             case R.id.action_delete_notes:
+                if (!data.moveToFirst()) break;
                 cursorStatus = CursorStatus.DELETE;
                 deleteDialog().show();
                 break;
@@ -183,6 +184,7 @@ public class MainActivity extends AppCompatActivity implements
     private AlertDialog buildAddDialog() {
         return new AlertDialog.Builder(this, R.style.AlertDialogStyle)
                 .setTitle(getString(R.string.and_title))
+                .setIcon(R.mipmap.ic_launcher)
                 .setView(R.layout.add_note_dialog)
                 .setPositiveButton(getString(R.string.accept), new DialogInterface.OnClickListener() {
                     @Override
@@ -200,14 +202,15 @@ public class MainActivity extends AppCompatActivity implements
     private AlertDialog buildViewNoteDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AlertDialogStyle);
         final ListAdapter listAdapter = new SimpleCursorAdapter(this,
-                android.R.layout.simple_list_item_1,
+                R.layout.view_notes_row,
                 data,
                 new String[] {FilesDatabaseHelper.TITLE},
-                new int[] {android.R.id.text1},
+                new int[] {R.id.vnr_text_view},
                 0);
 
         builder.setTitle(getString(R.string.app_name));
         builder.setView(R.layout.view_notes_df);
+        builder.setIcon(R.mipmap.ic_launcher);
         builder.setAdapter(listAdapter, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -237,6 +240,7 @@ public class MainActivity extends AppCompatActivity implements
 
         builder.setTitle(R.string.dnd_title);
         builder.setMessage(getString(R.string.dnd_content, mNoteFragment.getTitle()));
+        builder.setIcon(R.mipmap.ic_launcher);
         builder.setPositiveButton(R.string.accept, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
