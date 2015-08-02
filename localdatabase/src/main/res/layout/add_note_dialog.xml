@@ -1,19 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="@dimen/material_single_row_height">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:textSize="20sp"
+        android:layout_marginStart="@dimen/material_margin_standard"
+        android:layout_marginLeft="@dimen/material_margin_standard"
         android:text="@string/and_title_prompt"/>
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="text"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:textSize="18sp"
+        android:inputType="textNoSuggestions"
+        android:singleLine="true"
+        android:maxEms="15"
+        android:layout_marginLeft="@dimen/material_row_left_margin_text"
+        android:layout_marginStart="@dimen/material_row_left_margin_text"
+        android:layout_marginEnd="@dimen/material_margin_standard"
+        android:layout_marginRight="@dimen/material_margin_standard"
         android:id="@+id/and_title_entry"/>
 
-</LinearLayout>
+</RelativeLayout>

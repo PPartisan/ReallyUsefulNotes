@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.werdpressed.partisan.reallyusefulnotes.localdatabase.databasetasks.AddTask;
 import com.werdpressed.partisan.reallyusefulnotes.localdatabase.databasetasks.DeleteTask;
@@ -86,9 +87,9 @@ public class MainActivity extends AppCompatActivity implements
         int id = item.getItemId();
 
         switch (id) {
-           /* case R.id.action_settings:
+            case R.id.action_settings:
                 Toast.makeText(this, getString(R.string.action_settings), Toast.LENGTH_SHORT).show();
-                break; */
+                break;
             case R.id.action_add_note:
                 cursorStatus = CursorStatus.ADD;
                 buildAddDialog().show();
