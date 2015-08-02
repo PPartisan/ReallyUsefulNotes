@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/material_single_row_height">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/vnr_text_view"
+        android:textStyle="bold"
+        android:gravity="center_vertical"
+        android:layout_marginLeft="@dimen/material_row_left_margin_text"
+        android:layout_marginStart="@dimen/material_row_left_margin_text"
+        android:layout_marginRight="@dimen/material_margin_standard"
+        android:layout_marginEnd="@dimen/material_margin_standard" />
+
+</LinearLayout>

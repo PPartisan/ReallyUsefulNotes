@@ -1,1 +1,1 @@
-include ':basicsetup', ':localsaveandload'
+include ':basicsetup', ':localsaveandload', ':localdatabase'
