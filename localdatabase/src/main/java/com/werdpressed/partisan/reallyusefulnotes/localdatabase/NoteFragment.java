@@ -3,6 +3,7 @@ package com.werdpressed.partisan.reallyusefulnotes.localdatabase;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,18 +34,9 @@ public class NoteFragment extends Fragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         setRetainInstance(true);
-
-        if (getTitle() != null) {
-            ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(getTitle());
-        }
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         rootView = inflater.inflate(R.layout.note_fragment, container, false);
 
@@ -54,6 +46,11 @@ public class NoteFragment extends Fragment {
         mEditText.setText(getContent());
 
         return rootView;
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
     }
 
     public long getKeyId(){
@@ -70,16 +67,6 @@ public class NoteFragment extends Fragment {
 
     public String getCurrentText() {
         return mEditText.getText().toString();
-    }
-
-    public void setContent(String newText) {
-        mEditText.setText(newText);
-    }
-
-    public void setTitle(String newTitle) {
-        if (getTitle() != null) {
-            ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(getTitle());
-        }
     }
 
 }

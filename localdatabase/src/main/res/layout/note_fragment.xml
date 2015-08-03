@@ -9,6 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/note_fragment_edit_text"
+        android:imeOptions="flagNoExtractUi"
         android:gravity="start|top"
         android:inputType="textMultiLine"
         android:background="@null"/>

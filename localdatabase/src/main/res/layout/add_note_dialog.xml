@@ -25,7 +25,7 @@
         android:textSize="18sp"
         android:inputType="textNoSuggestions"
         android:singleLine="true"
-        android:maxEms="15"
+        android:maxLength="20"
         android:layout_marginLeft="@dimen/material_row_left_margin_text"
         android:layout_marginStart="@dimen/material_row_left_margin_text"
         android:layout_marginEnd="@dimen/material_margin_standard"
