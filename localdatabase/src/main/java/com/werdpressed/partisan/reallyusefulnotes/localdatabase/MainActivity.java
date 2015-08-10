@@ -152,6 +152,7 @@ public class MainActivity extends AppCompatActivity implements
                 break;
             case DEFAULT:
                 if (mNoteFragment != null) {
+                    getSupportActionBar().setTitle(mNoteFragment.getTitle());
                     break;
                 } else {
                     data.moveToFirst();

@@ -34,9 +34,18 @@ public class NoteFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
         setRetainInstance(true);
+
+        if (getTitle() != null) {
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(getTitle());
+        }
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         rootView = inflater.inflate(R.layout.note_fragment, container, false);
 
@@ -67,6 +76,12 @@ public class NoteFragment extends Fragment {
 
     public String getCurrentText() {
         return mEditText.getText().toString();
+    }
+
+    public void setTitle(String newTitle) {
+        if (getTitle() != null) {
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(getTitle());
+        }
     }
 
 }
