@@ -1,1 +1,1 @@
-include ':basicsetup', ':localsaveandload', ':localdatabase'
+include ':basicsetup', ':localsaveandload', ':localdatabase', ':designlibrary'

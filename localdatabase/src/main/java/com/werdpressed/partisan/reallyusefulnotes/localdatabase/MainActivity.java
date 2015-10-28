@@ -15,6 +15,7 @@ import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.werdpressed.partisan.reallyusefulnotes.designlibrary.R;
 import com.werdpressed.partisan.reallyusefulnotes.localdatabase.databasetasks.AddTask;
 import com.werdpressed.partisan.reallyusefulnotes.localdatabase.databasetasks.DeleteTask;
 import com.werdpressed.partisan.reallyusefulnotes.localdatabase.databasetasks.FilesDatabaseHelper;
@@ -97,8 +98,10 @@ public class MainActivity extends AppCompatActivity implements
             case R.id.action_save_note:
                 mNoteFragment = (NoteFragment) getFragmentManager()
                         .findFragmentById(R.id.note_fragment_container);
-                st = new SaveTask(this, mNoteFragment.getKeyId());
-                st.execute(mNoteFragment.getCurrentText());
+                if (mNoteFragment != null) {
+                    st = new SaveTask(this, mNoteFragment.getKeyId());
+                    st.execute(mNoteFragment.getCurrentText());
+                }
                 break;
             case R.id.action_view_notes:
                 buildViewNoteDialog().show();

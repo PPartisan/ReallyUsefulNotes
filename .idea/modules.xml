@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/ReallyUsefulNotes.iml" filepath="$PROJECT_DIR$/ReallyUsefulNotes.iml" />
       <module fileurl="file://$PROJECT_DIR$/basicsetup/basicsetup.iml" filepath="$PROJECT_DIR$/basicsetup/basicsetup.iml" />
+      <module fileurl="file://$PROJECT_DIR$/designlibrary/designlibrary.iml" filepath="$PROJECT_DIR$/designlibrary/designlibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/localdatabase/localdatabase.iml" filepath="$PROJECT_DIR$/localdatabase/localdatabase.iml" />
       <module fileurl="file://$PROJECT_DIR$/localsaveandload/localsaveandload.iml" filepath="$PROJECT_DIR$/localsaveandload/localsaveandload.iml" />
     </modules>

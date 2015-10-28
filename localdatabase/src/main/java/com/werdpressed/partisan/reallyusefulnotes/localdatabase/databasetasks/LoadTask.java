@@ -6,7 +6,7 @@ import android.os.AsyncTask;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 
-import com.werdpressed.partisan.reallyusefulnotes.localdatabase.R;
+import com.werdpressed.partisan.reallyusefulnotes.designlibrary.R;
 
 import java.lang.ref.WeakReference;
 
