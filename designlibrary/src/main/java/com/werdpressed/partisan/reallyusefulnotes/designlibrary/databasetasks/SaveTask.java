@@ -5,18 +5,17 @@ import android.content.Context;
 import android.os.AsyncTask;
 
 import com.werdpressed.partisan.reallyusefulnotes.designlibrary.NoteFragmentCallbacks;
+import com.werdpressed.partisan.reallyusefulnotes.designlibrary.NoteRowItem;
 
 import java.lang.ref.WeakReference;
 
-public class SaveTask extends AsyncTask<String, Void, Void> {
+public class SaveTask extends AsyncTask<NoteRowItem, Void, Void> {
 
-    private WeakReference<Context> weakReference;
     private FilesDatabaseHelper db;
     private long keyId;
 
     public SaveTask(Context context, long keyId){
-        weakReference = new WeakReference<>(context);
-        db = FilesDatabaseHelper.getInstance(weakReference.get());
+        db = FilesDatabaseHelper.getInstance(context);
         this.keyId = keyId;
     }
 
@@ -27,10 +26,12 @@ public class SaveTask extends AsyncTask<String, Void, Void> {
     }
 
     @Override
-    protected Void doInBackground(String... params) {
+    protected Void doInBackground(NoteRowItem... params) {
 
         ContentValues cv = new ContentValues();
-        cv.put(FilesDatabaseHelper.CONTENT, params[0]);
+        cv.put(FilesDatabaseHelper.TITLE, params[0].getTitle());
+        cv.put(FilesDatabaseHelper.CONTENT, params[0].getContent());
+        cv.put(FilesDatabaseHelper.LIST_ORDER, params[0].getKeyId());
 
         db.getWritableDatabase().update(
                 FilesDatabaseHelper.TABLE,
