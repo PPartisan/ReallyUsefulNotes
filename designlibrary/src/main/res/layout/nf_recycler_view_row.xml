@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/material_single_row_height"
+    android:layout_marginTop="@dimen/material_margin_standard"
+    android:foreground="?attr/selectableItemBackground"
+    android:focusable="true"
+    android:clickable="true">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:id="@+id/nf_rv_icon"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/material_margin_standard"
+            android:layout_marginStart="@dimen/material_margin_standard"
+            android:contentDescription="@string/icon"
+            android:src="@mipmap/ic_launcher"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/nf_rv_title"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:textStyle="bold"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="@dimen/material_row_left_margin_text"
+            android:layout_marginStart="@dimen/material_row_left_margin_text"
+            android:layout_toLeftOf="@+id/nf_rv_overflow_menu"
+            android:layout_toStartOf="@+id/nf_rv_overflow_menu" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/nf_rv_overflow_menu"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_more_vert_black_24dp"
+            android:contentDescription="@string/vf_rv_overflow_content_description"
+            style="@style/Widget.AppCompat.Button.Borderless" />
+
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>
