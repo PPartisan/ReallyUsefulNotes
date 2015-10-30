@@ -7,9 +7,10 @@ import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.view.View;
 
+@SuppressWarnings("unused")
 public class FloatingActionButtonBehavior extends FloatingActionButton.Behavior {
 
-    private static final String TAG = "FAB-Behavior";
+    //private static final String TAG = "FAB-Behavior";
 
     @SuppressWarnings("unused")
     public FloatingActionButtonBehavior(Context context, AttributeSet attrs) {

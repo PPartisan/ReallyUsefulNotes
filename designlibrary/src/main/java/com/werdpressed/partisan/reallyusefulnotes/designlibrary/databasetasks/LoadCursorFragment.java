@@ -42,7 +42,7 @@ public class LoadCursorFragment extends Fragment {
 
     private class LoadTask extends AsyncTask<Void, Void, Cursor> {
 
-        private static final String TAG = "LoadTask";
+        //private static final String TAG = "LoadTask";
 
         private WeakReference<Context> weakReference;
         private FilesDatabaseHelper db;

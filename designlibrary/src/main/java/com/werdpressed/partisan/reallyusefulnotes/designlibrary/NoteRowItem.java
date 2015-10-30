@@ -1,5 +1,7 @@
 package com.werdpressed.partisan.reallyusefulnotes.designlibrary;
 
+import com.werdpressed.partisan.reallyusefulnotes.designlibrary.utils.ConversionUtils;
+
 import java.util.Comparator;
 
 public class NoteRowItem {
@@ -69,6 +71,12 @@ public class NoteRowItem {
 
     public void setKeyId(int keyId) {
         this.keyId = keyId;
+    }
+
+    public void setKeyId(long keyId) {
+        if (ConversionUtils.isPossibleToCastLongToInt(keyId)) {
+            this.keyId = (int) keyId;
+        }
     }
 
 }

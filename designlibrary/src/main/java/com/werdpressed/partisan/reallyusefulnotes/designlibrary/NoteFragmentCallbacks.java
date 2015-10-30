@@ -8,5 +8,6 @@ public interface NoteFragmentCallbacks {
 
     void deleteNote(int position);
     void moveNote(int fromPosition, int toPosition);
+    void updateNoteListOrders();
 
 }

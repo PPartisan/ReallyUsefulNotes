@@ -6,6 +6,7 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,14 +14,17 @@ import android.widget.Toast;
 
 import com.werdpressed.partisan.reallyusefulnotes.designlibrary.databasetasks.AddTask;
 import com.werdpressed.partisan.reallyusefulnotes.designlibrary.databasetasks.DeleteTask;
+import com.werdpressed.partisan.reallyusefulnotes.designlibrary.databasetasks.FilesDatabaseHelper;
 import com.werdpressed.partisan.reallyusefulnotes.designlibrary.databasetasks.LoadCursorFragment;
 import com.werdpressed.partisan.reallyusefulnotes.designlibrary.databasetasks.LoadCursorFragmentCallbacks;
+import com.werdpressed.partisan.reallyusefulnotes.designlibrary.databasetasks.TaskCallbacks;
+import com.werdpressed.partisan.reallyusefulnotes.designlibrary.databasetasks.UpdateListOrderTask;
 
 import java.util.ArrayList;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener,
-        LoadCursorFragmentCallbacks, NoteRowItemOperationsFragmentCallbacks, AddNotesDialogCallbacks, NoteFragmentCallbacks {
+        LoadCursorFragmentCallbacks, NoteRowItemOperationsFragmentCallbacks, AddNotesDialogCallbacks, NoteFragmentCallbacks, TaskCallbacks {
 
     private static final String TAG = "MainActivity";
     private static final int NOTE_CONTAINER_ID = (R.id.note_fragment_container);
@@ -64,6 +68,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (id) {
             case R.id.action_settings:
                 Toast.makeText(this, getString(R.string.action_settings), Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.action_sort_by_custom:
+                mNoteRowItemOperationsFragment
+                        .sortNoteRowItemsBy(NoteRowItemOperationsFragment.SORT_BY_CUSTOM);
+                break;
+            case R.id.action_sort_by_date_added:
+                mNoteRowItemOperationsFragment
+                        .sortNoteRowItemsBy(NoteRowItemOperationsFragment.SORT_BY_DATE_ADDED);
+                break;
+            case R.id.action_sort_by_title:
+                mNoteRowItemOperationsFragment
+                        .sortNoteRowItemsBy(NoteRowItemOperationsFragment.SORT_BY_TITLE);
                 break;
         }
 
@@ -180,15 +196,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
-    public void addNewNote(String title) {
+    public void notifyNoteFragmentAdapterItemOrderChanged() {
+        mNoteFragment.getAdapter().updateListOrder();
+    }
 
+    @Override
+    public void notifyMainActivityListOrdersUpdated() {
+        //noinspection unchecked
+        new UpdateListOrderTask(FilesDatabaseHelper.getInstance(this))
+                .execute(mNoteRowItemOperationsFragment.getNoteRowItems());
+    }
+
+    @Override
+    public void addNewNote(String title) {
         NoteRowItem newItem = new NoteRowItem();
         newItem.setTitle(title);
 
         new AddTask(this).execute(newItem);
-        mNoteRowItemOperationsFragment.addNewEntry(newItem);
-
-        determineWelcomeMessageVisibility();
     }
 
     @Override
@@ -200,18 +224,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void deleteNote(int position) {
-
-        new DeleteTask(this, mNoteRowItemOperationsFragment.getNoteRowItems().get(position).getKeyId()).execute();
+        long keyId = mNoteRowItemOperationsFragment.getNoteRowItems().get(position).getKeyId();
+        new DeleteTask(this, keyId).execute();
         mNoteRowItemOperationsFragment.deleteEntry(position);
         determineWelcomeMessageVisibility();
-
     }
 
     @Override
     public void moveNote(int fromPosition, int toPosition) {
-
         mNoteRowItemOperationsFragment.moveEntry(fromPosition, toPosition);
-        //ToDo Update DB list_order data to reflect move
+    }
 
+    @Override
+    public void updateNoteListOrders() {
+        mNoteRowItemOperationsFragment.moveEntryCompleteUpdateListOrders();
+    }
+
+    @Override
+    public void addNewNoteToNoteRowItems(NoteRowItem item) {
+        mNoteRowItemOperationsFragment.addNewEntry(item);
+        determineWelcomeMessageVisibility();
     }
 }

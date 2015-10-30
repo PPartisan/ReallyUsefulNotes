@@ -8,4 +8,34 @@
         android:orderInCategory="100"
         app:showAsAction="never" />
 
+    <item android:id="@+id/action_sort"
+        android:title="@string/action_sort"
+        android:icon="@drawable/ic_sort_white_24dp"
+        android:orderInCategory="90"
+        app:showAsAction="ifRoom" >
+
+        <menu>
+
+            <item
+                android:id="@+id/action_sort_by_custom"
+                android:title="@string/action_sort_by_custom"
+                android:orderInCategory="80"
+                app:showAsAction="ifRoom" />
+
+            <item
+                android:id="@+id/action_sort_by_date_added"
+                android:title="@string/action_sort_by_date_added"
+                android:orderInCategory="90"
+                app:showAsAction="ifRoom" />
+
+            <item
+                android:id="@+id/action_sort_by_title"
+                android:title="@string/action_sort_by_title"
+                android:orderInCategory="100"
+                app:showAsAction="ifRoom" />
+
+        </menu>
+
+    </item>
+
 </menu>

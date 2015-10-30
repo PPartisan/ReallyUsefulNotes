@@ -34,5 +34,9 @@
     <string name="delete">Delete</string>
     <string name="edit">Edit</string>
     <string name="icon">Icon</string>
+    <string name="action_sort">sort</string>
+    <string name="action_sort_by_custom">Custom</string>
+    <string name="action_sort_by_date_added">Date Added</string>
+    <string name="action_sort_by_title">Title</string>
 
 </resources>

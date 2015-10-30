@@ -2,6 +2,7 @@ package com.werdpressed.partisan.reallyusefulnotes.designlibrary.notehelper;
 
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
 
 
 public class NoteRowItemTouchHelper extends ItemTouchHelper.Callback {
@@ -34,8 +35,15 @@ public class NoteRowItemTouchHelper extends ItemTouchHelper.Callback {
     }
 
     @Override
-    public void onSelectedChanged(RecyclerView.ViewHolder viewHolder, int actionState) {
+    public void clearView(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
+        //ToDo Invoke callback to update list_order entries in Array and DataBase
+        Log.e(getClass().getSimpleName(), "clearView. onItemMoveComplete");
+        mAdapter.onItemMoveComplete();
+        super.clearView(recyclerView, viewHolder);
+    }
 
+    @Override
+    public void onSelectedChanged(RecyclerView.ViewHolder viewHolder, int actionState) {
         boolean conditions = (actionState != ItemTouchHelper.ACTION_STATE_IDLE)
                 && (viewHolder instanceof NoteRowItemTouchHelperViewHolder);
 

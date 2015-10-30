@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 
 import com.werdpressed.partisan.reallyusefulnotes.designlibrary.databasetasks.FilesDatabaseHelper;
 
@@ -13,6 +14,10 @@ import java.util.Collections;
 public class NoteRowItemOperationsFragment extends Fragment {
 
     public static final String TAG = "NoteRowOpsFrag";
+
+    public static final int SORT_BY_CUSTOM = 844;
+    public static final int SORT_BY_DATE_ADDED = SORT_BY_CUSTOM + 1;
+    public static final int SORT_BY_TITLE = SORT_BY_DATE_ADDED + 1;
 
     private NoteRowItemOperationsFragmentCallbacks callback;
     private ArrayList<NoteRowItem> mNoteRowItems = new ArrayList<>();
@@ -36,13 +41,32 @@ public class NoteRowItemOperationsFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-        //could write to database here?
+        /* Could write to database here.
+        Currently delete, add & move happens automatically however.
+         */
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
         callback = null;
+    }
+
+    public void sortNoteRowItemsBy(int sortCode) {
+        switch (sortCode) {
+            case SORT_BY_CUSTOM:
+                Collections.sort(mNoteRowItems, NoteRowItem.listOrderComparator);
+                break;
+            case SORT_BY_DATE_ADDED:
+                Collections.sort(mNoteRowItems, NoteRowItem.keyIdComparator);
+                break;
+            case SORT_BY_TITLE:
+                Collections.sort(mNoteRowItems, NoteRowItem.titleComparator);
+                break;
+            default:
+                throw new IllegalArgumentException();
+        }
+        callback.notifyNoteFragmentAdapterItemOrderChanged();
     }
 
     public void refreshData(Cursor data) {
@@ -66,6 +90,17 @@ public class NoteRowItemOperationsFragment extends Fragment {
     public void moveEntry(int fromPosition, int toPosition) {
         Collections.swap(mNoteRowItems, fromPosition, toPosition);
         callback.notifyNoteFragmentAdapterItemMoved(fromPosition, toPosition);
+    }
+
+    public void moveEntryCompleteUpdateListOrders() {
+        updateListOrder();
+    }
+
+    private void updateListOrder() {
+        for (int i = 0; i < mNoteRowItems.size(); i++) {
+            mNoteRowItems.get(i).setListOrder(i);
+        }
+        callback.notifyMainActivityListOrdersUpdated();
     }
 
     private void convertCursorToArrayList(Cursor data) {

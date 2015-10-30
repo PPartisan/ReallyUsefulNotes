@@ -15,7 +15,6 @@ import com.werdpressed.partisan.reallyusefulnotes.designlibrary.notehelper.NoteR
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class NoteFragmentAdapter extends RecyclerView.Adapter<NoteFragmentAdapter.ViewHolder>
         implements NoteRowItemTouchHelperAdapter{
@@ -39,7 +38,6 @@ public class NoteFragmentAdapter extends RecyclerView.Adapter<NoteFragmentAdapte
     public void onBindViewHolder(final ViewHolder holder, int position) {
 
         holder.title.setText(mItems.get(position).getTitle());
-        holder.menu.setOnClickListener(new PopUpMenuClickListener(holder.popup));
 
     }
 
@@ -68,24 +66,37 @@ public class NoteFragmentAdapter extends RecyclerView.Adapter<NoteFragmentAdapte
         notifyItemMoved(fromPosition, toPosition);
     }
 
+    public void updateListOrder() {
+        //Will be replaced with animation shortly
+        notifyDataSetChanged();
+    }
+
     @Override
     public boolean onItemMove(int fromPosition, int toPosition) {
         if (fromPosition < toPosition) {
             for (int i = fromPosition; i < toPosition; i++ ) {
-                Collections.swap(mItems, i, i + 1);
+                mWeakCallback.get().moveNote(i, i + 1);
             }
         } else {
             for (int i = fromPosition; i > toPosition; i--) {
-                Collections.swap(mItems, i, i - 1);
+                mWeakCallback.get().moveNote(i, i - 1);
             }
         }
-        mWeakCallback.get().moveNote(fromPosition, toPosition);
         return false;
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder implements PopupMenu.OnMenuItemClickListener{
+    @Override
+    public void onItemMoveComplete() {
+        for (NoteRowItem item : mItems) {
+            Log.e(getClass().getSimpleName(), item.getTitle() + ": " + item.getListOrder());
+        }
+        mWeakCallback.get().updateNoteListOrders();
+    }
 
-        private static final String TAG = "ViewHolder";
+    public static class ViewHolder extends RecyclerView.ViewHolder implements
+            PopupMenu.OnMenuItemClickListener, View.OnClickListener{
+
+        //private static final String TAG = "ViewHolder";
 
         private NoteFragmentCallbacks mCallback;
 
@@ -100,9 +111,10 @@ public class NoteFragmentAdapter extends RecyclerView.Adapter<NoteFragmentAdapte
 
             title = (TextView) itemView.findViewById(R.id.nf_rv_title);
             menu = (ImageButton) itemView.findViewById(R.id.nf_rv_overflow_menu);
+            menu.setOnClickListener(this);
 
             popup = new PopupMenu(itemView.getContext(), menu, Gravity.END);
-            popup.getMenuInflater().inflate(R.menu.nf_rvr_overflow_popup_menu, popup.getMenu());
+            popup.getMenuInflater().inflate(R.menu.menu_row_overflow, popup.getMenu());
             popup.setOnMenuItemClickListener(this);
         }
 
@@ -119,6 +131,11 @@ public class NoteFragmentAdapter extends RecyclerView.Adapter<NoteFragmentAdapte
                     break;
             }
             return false;
+        }
+
+        @Override
+        public void onClick(View v) {
+            popup.show();
         }
     }
 

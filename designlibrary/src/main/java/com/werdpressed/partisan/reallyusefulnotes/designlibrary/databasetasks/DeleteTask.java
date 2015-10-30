@@ -3,8 +3,6 @@ package com.werdpressed.partisan.reallyusefulnotes.designlibrary.databasetasks;
 import android.content.Context;
 import android.os.AsyncTask;
 
-import com.werdpressed.partisan.reallyusefulnotes.designlibrary.NoteFragmentCallbacks;
-
 import java.lang.ref.WeakReference;
 
 public class DeleteTask extends AsyncTask<Void, Void, Void> {

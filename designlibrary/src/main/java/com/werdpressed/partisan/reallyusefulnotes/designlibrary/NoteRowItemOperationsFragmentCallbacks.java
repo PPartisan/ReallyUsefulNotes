@@ -9,5 +9,8 @@ public interface NoteRowItemOperationsFragmentCallbacks {
     void notifyNoteFragmentAdapterNewItemAdded(int newItemPosition);
     void notifyNoteFragmentAdapterItemDelete(int position);
     void notifyNoteFragmentAdapterItemMoved(int fromPosition, int toPosition);
+    void notifyNoteFragmentAdapterItemOrderChanged();
+
+    void notifyMainActivityListOrdersUpdated();
 
 }
