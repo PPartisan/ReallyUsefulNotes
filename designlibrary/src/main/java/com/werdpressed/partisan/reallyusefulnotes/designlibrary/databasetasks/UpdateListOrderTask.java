@@ -27,12 +27,16 @@ public class UpdateListOrderTask extends AsyncTask<ArrayList<NoteRowItem>, Void,
                 update.bindLong(1, item.getListOrder());
                 update.bindLong(2, item.getKeyId());
                 update.execute();
-                Log.e(getClass().getSimpleName(), item.getTitle() + " updated. List Order is now " + item.getListOrder() + " and keyId is " + item.getKeyId());
             }
             db.getWritableDatabase().setTransactionSuccessful();
         } finally {
             db.getWritableDatabase().endTransaction();
         }
         return null;
+    }
+
+    @Override
+    protected void onPostExecute(Void aVoid) {
+        db = null;
     }
 }

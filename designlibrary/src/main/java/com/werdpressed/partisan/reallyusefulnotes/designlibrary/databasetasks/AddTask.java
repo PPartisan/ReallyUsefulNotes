@@ -35,5 +35,6 @@ public class AddTask extends AsyncTask<NoteRowItem, Void, NoteRowItem> {
     @Override
     protected void onPostExecute(NoteRowItem item) {
         mWeakCallback.get().addNewNoteToNoteRowItems(item);
+        db = null;
     }
 }
