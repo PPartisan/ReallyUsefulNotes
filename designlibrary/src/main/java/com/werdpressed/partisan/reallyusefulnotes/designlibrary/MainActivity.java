@@ -1,6 +1,7 @@
 package com.werdpressed.partisan.reallyusefulnotes.designlibrary;
 
 import android.database.Cursor;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -10,6 +11,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.werdpressed.partisan.reallyusefulnotes.designlibrary.databasetasks.AddTask;
@@ -32,6 +34,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private CollapsingToolbarLayout mCollapsingToolbarLayout;
     private Toolbar mToolbar;
     private FloatingActionButton mFloatingActionButton;
+    private ImageView mHeaderImageView;
 
     private NoteFragment mNoteFragment;
     private AddNotesDialog addNotesDialog;
@@ -48,6 +51,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         setSupportActionBar(mToolbar);
         mFloatingActionButton.setOnClickListener(this);
+        setHeaderImageDrawable();
 
         addNoteFragment();
 
@@ -90,6 +94,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mCollapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar_layout);
         mFloatingActionButton = (FloatingActionButton) findViewById(R.id.fab);
+        mHeaderImageView = (ImageView) findViewById(R.id.header_image);
     }
 
     @Override
@@ -103,6 +108,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 addNotesDialog.create();
                 break;
+        }
+    }
+
+    @SuppressWarnings("deprecated")
+    private void setHeaderImageDrawable() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            mHeaderImageView.setImageDrawable(getDrawable(R.drawable.header_image));
+        } else {
+            mHeaderImageView.setImageDrawable(getResources().getDrawable(R.drawable.header_image));
         }
     }
 
@@ -197,7 +211,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void notifyNoteFragmentAdapterItemOrderChanged() {
-        mNoteFragment.getAdapter().updateListOrder();
+        mNoteFragment.getRecyclerView().updateListOrder();
     }
 
     @Override

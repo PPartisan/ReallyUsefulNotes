@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -23,7 +24,7 @@ public class NoteFragment extends Fragment {
 
     private TextView welcomeMessage;
 
-    private RecyclerView mRecyclerView;
+    private NoteFragmentRecyclerView mRecyclerView;
     private NoteFragmentAdapter mAdapter;
 
     public static NoteFragment newInstance() {
@@ -43,7 +44,7 @@ public class NoteFragment extends Fragment {
 
         welcomeMessage = (TextView) rootView.findViewById(R.id.anf_welcome);
 
-        mRecyclerView = (RecyclerView) rootView.findViewById(R.id.anf_recycler_view);
+        mRecyclerView = (NoteFragmentRecyclerView) rootView.findViewById(R.id.anf_recycler_view);
         mAdapter = new NoteFragmentAdapter(mCallbacks);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -74,4 +75,7 @@ public class NoteFragment extends Fragment {
         return mAdapter;
     }
 
+    public NoteFragmentRecyclerView getRecyclerView() {
+        return mRecyclerView;
+    }
 }

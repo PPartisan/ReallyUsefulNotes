@@ -64,7 +64,8 @@ public class NoteRowItemOperationsFragment extends Fragment {
                 Collections.sort(mNoteRowItems, NoteRowItem.titleComparator);
                 break;
             default:
-                throw new IllegalArgumentException();
+                throw new IllegalArgumentException("Argument must be a SORT_BY constant:" +
+                        "\nSORT_BY_CUSTOM\nSORT_BY_DATE_ADDED\nSORT_BY_TITLE");
         }
         callback.notifyNoteFragmentAdapterItemOrderChanged();
     }

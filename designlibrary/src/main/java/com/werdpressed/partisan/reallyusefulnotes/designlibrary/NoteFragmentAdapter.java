@@ -35,7 +35,7 @@ public class NoteFragmentAdapter extends RecyclerView.Adapter<NoteFragmentAdapte
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, int position) {
 
         holder.title.setText(mItems.get(position).getTitle());
 
@@ -66,11 +66,6 @@ public class NoteFragmentAdapter extends RecyclerView.Adapter<NoteFragmentAdapte
         notifyItemMoved(fromPosition, toPosition);
     }
 
-    public void updateListOrder() {
-        //Will be replaced with animation shortly
-        notifyDataSetChanged();
-    }
-
     @Override
     public boolean onItemMove(int fromPosition, int toPosition) {
         if (fromPosition < toPosition) {
@@ -96,7 +91,7 @@ public class NoteFragmentAdapter extends RecyclerView.Adapter<NoteFragmentAdapte
     public static class ViewHolder extends RecyclerView.ViewHolder implements
             PopupMenu.OnMenuItemClickListener, View.OnClickListener{
 
-        //private static final String TAG = "ViewHolder";
+        private static final String TAG = "ViewHolder";
 
         private NoteFragmentCallbacks mCallback;
 
@@ -124,10 +119,10 @@ public class NoteFragmentAdapter extends RecyclerView.Adapter<NoteFragmentAdapte
 
             switch (id) {
                 case R.id.row_action_edit:
-                    Log.e(getClass().getSimpleName(), "edit: position " + getAdapterPosition());
+                    Log.e(TAG, "edit: position " + getAdapterPosition());
                     break;
                 case R.id.row_action_delete:
-                    mCallback.deleteNote(getAdapterPosition()); //May want to set keyId here too?
+                    mCallback.deleteNote(getAdapterPosition());
                     break;
             }
             return false;

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:layout_width="match_parent">
 
-    <android.support.v7.widget.RecyclerView
+    <com.werdpressed.partisan.reallyusefulnotes.designlibrary.NoteFragmentRecyclerView
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/anf_recycler_view"
         android:layout_height="match_parent"
