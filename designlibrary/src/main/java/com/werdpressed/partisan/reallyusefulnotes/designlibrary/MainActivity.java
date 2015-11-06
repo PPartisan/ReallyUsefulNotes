@@ -11,6 +11,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -26,7 +28,7 @@ import java.util.ArrayList;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener,
-        LoadCursorFragmentCallbacks, NoteRowItemOperationsFragmentCallbacks, AddNotesDialogCallbacks, NoteFragmentCallbacks, TaskCallbacks {
+        LoadCursorFragmentCallbacks, NoteRowItemOperationsFragmentCallbacks, AddNotesDialogCallbacks, AllNotesFragmentCallbacks, TaskCallbacks {
 
     private static final String TAG = "MainActivity";
     private static final int NOTE_CONTAINER_ID = (R.id.note_fragment_container);
@@ -36,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private FloatingActionButton mFloatingActionButton;
     private ImageView mHeaderImageView;
 
-    private NoteFragment mNoteFragment;
+    private AllNotesFragment mAllNotesFragment;
     private AddNotesDialog addNotesDialog;
 
     private NoteRowItemOperationsFragment mNoteRowItemOperationsFragment;
@@ -51,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         setSupportActionBar(mToolbar);
         mFloatingActionButton.setOnClickListener(this);
-        setHeaderImageDrawable();
+        //setHeaderImageDrawable();
 
         addNoteFragment();
 
@@ -121,20 +123,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void addNoteFragment() {
-        mNoteFragment = (NoteFragment) getSupportFragmentManager()
-                .findFragmentByTag(NoteFragment.TAG);
-        if (mNoteFragment == null) {
-            mNoteFragment = NoteFragment.newInstance();
+        mAllNotesFragment = (AllNotesFragment) getSupportFragmentManager()
+                .findFragmentByTag(AllNotesFragment.TAG);
+        if (mAllNotesFragment == null) {
+            mAllNotesFragment = AllNotesFragment.newInstance();
             getSupportFragmentManager()
                     .beginTransaction()
-                    .add(NOTE_CONTAINER_ID, mNoteFragment, NoteFragment.TAG)
+                    .add(NOTE_CONTAINER_ID, mAllNotesFragment, AllNotesFragment.TAG)
                     .commit();
         }
     }
 
     private void addLoadCursorFragment() {
         mLoadCursorFragment = (LoadCursorFragment)getSupportFragmentManager()
-                        .findFragmentByTag(LoadCursorFragment.TAG);
+                .findFragmentByTag(LoadCursorFragment.TAG);
         if (mLoadCursorFragment == null) {
             mLoadCursorFragment = LoadCursorFragment.newInstance();
             getSupportFragmentManager()
@@ -156,7 +158,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void addNoteRowItemOperationsFragment() {
         mNoteRowItemOperationsFragment = (NoteRowItemOperationsFragment) getSupportFragmentManager()
-                        .findFragmentByTag(NoteRowItemOperationsFragment.TAG);
+                .findFragmentByTag(NoteRowItemOperationsFragment.TAG);
         if (mNoteRowItemOperationsFragment == null) {
             mNoteRowItemOperationsFragment = NoteRowItemOperationsFragment.newInstance();
             getSupportFragmentManager()
@@ -167,17 +169,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void determineWelcomeMessageVisibility() {
-        determineWelcomeMessageVisibility(mNoteFragment.getAdapter().getItemCount());
+        determineWelcomeMessageVisibility(mAllNotesFragment.getAdapter().getItemCount());
     }
 
     private void determineWelcomeMessageVisibility(int dataSize) {
         if (dataSize < 1) {
-            if (mNoteFragment.getWelcomeMessageVisibility() == View.GONE) {
-                mNoteFragment.setWelcomeMessageVisibility(View.VISIBLE);
+            if (mAllNotesFragment.getWelcomeMessageVisibility() == View.GONE) {
+                mAllNotesFragment.setWelcomeMessageVisibility(View.VISIBLE);
             }
         } else {
-            if (mNoteFragment.getWelcomeMessageVisibility() == View.VISIBLE) {
-                mNoteFragment.setWelcomeMessageVisibility(View.GONE);
+            if (mAllNotesFragment.getWelcomeMessageVisibility() == View.VISIBLE) {
+                mAllNotesFragment.setWelcomeMessageVisibility(View.GONE);
             }
         }
     }
@@ -190,28 +192,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void notifyNoteFragmentAdapterDataReady(ArrayList<NoteRowItem> items) {
-        mNoteFragment.getAdapter().updateAllData(items);
+        mAllNotesFragment.getAdapter().updateAllData(items);
         //removeLoadCursorFragment(); <-- Perhaps only call this if refreshing data?
     }
 
     @Override
     public void notifyNoteFragmentAdapterNewItemAdded(int newItemPosition) {
-        mNoteFragment.getAdapter().addNewEntry(newItemPosition);
+        mAllNotesFragment.getAdapter().addNewEntry(newItemPosition);
     }
 
     @Override
     public void notifyNoteFragmentAdapterItemDelete(int position) {
-        mNoteFragment.getAdapter().deleteEntry(position);
+        mAllNotesFragment.getAdapter().deleteEntry(position);
     }
 
     @Override
     public void notifyNoteFragmentAdapterItemMoved(int fromPosition, int toPosition) {
-        mNoteFragment.getAdapter().moveEntry(fromPosition, toPosition);
+        mAllNotesFragment.getAdapter().moveEntry(fromPosition, toPosition);
     }
 
     @Override
     public void notifyNoteFragmentAdapterItemOrderChanged() {
-        mNoteFragment.getRecyclerView().updateListOrder();
+        mAllNotesFragment.getRecyclerView().updateListOrder();
     }
 
     @Override

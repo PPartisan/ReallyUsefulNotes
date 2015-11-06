@@ -14,24 +14,27 @@ import android.view.animation.DecelerateInterpolator;
 
 import java.util.ArrayList;
 
-public class NoteFragmentRecyclerView extends RecyclerView {
+public class AllNotesFragmentRecyclerView extends RecyclerView {
 
-    private static final int TOTAL_ANIMATION_TIME = 500;
+    private static final int BASE_ANIMATION_TIME = 50;
+    private static final int MAX_ANIMATION_TIME_INCREMENT = 100;
 
     private int screenWidth;
     private int startX, finalX;
 
-    public NoteFragmentRecyclerView(Context context) {
+    private int[] interpolatedAnimationTimes;
+
+    public AllNotesFragmentRecyclerView(Context context) {
         super(context);
         init(context);
     }
 
-    public NoteFragmentRecyclerView(Context context, AttributeSet attrs) {
+    public AllNotesFragmentRecyclerView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context);
     }
 
-    public NoteFragmentRecyclerView(Context context, AttributeSet attrs, int defStyle) {
+    public AllNotesFragmentRecyclerView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         init(context);
     }
@@ -40,7 +43,7 @@ public class NoteFragmentRecyclerView extends RecyclerView {
         calculateScreenWidth(context);
 
         startX = 0;
-        finalX = screenWidth;
+        finalX = -(screenWidth);
     }
 
     private void calculateScreenWidth(Context context) {
@@ -50,13 +53,17 @@ public class NoteFragmentRecyclerView extends RecyclerView {
         screenWidth = metrics.widthPixels;
     }
 
+    private int calculateInterpolatedAnimationTime(int currentIndex, int maxIndex) {
+        float percentage = ((float)currentIndex/(float)maxIndex);
+        float increment = (float) MAX_ANIMATION_TIME_INCREMENT * percentage;
+        return (int) (BASE_ANIMATION_TIME + increment);
+    }
+
     public void updateListOrder() {
         createAnimatorSet();
     }
 
     private void createAnimatorSet() {
-
-        final int duration = 100;
 
         AnimatorSet set = new AnimatorSet();
         ArrayList<Animator> animArrayList = new ArrayList<>();
@@ -65,11 +72,13 @@ public class NoteFragmentRecyclerView extends RecyclerView {
             ObjectAnimator anim = ObjectAnimator
                     .ofFloat(getChildAt(i), "translationX", finalX);
 
-            anim.addListener(new RowAnimationOnListener(i, duration, startX));
+            int duration = calculateInterpolatedAnimationTime(i, getChildCount());
+
+            anim.setDuration(duration);
+            anim.addListener(new RowAnimationListener(i, duration, startX));
             animArrayList.add(anim);
         }
         set.setInterpolator(new AccelerateInterpolator());
-        set.setDuration(duration);
         set.playSequentially(animArrayList);
         set.start();
     }
@@ -82,12 +91,32 @@ public class NoteFragmentRecyclerView extends RecyclerView {
         animator.start();
     }
 
+    /*
+    Not entirely happy with this method. Should be existing method to grab all existing rows out-
+    side of bind view?
+     */
+    private void notifyRowsPeripheralToVisibleItemsDataChanged(int currentItem) {
+        if ((currentItem == 0)){
+            if ((currentItem - 1) > 0) {
+                getAdapter().notifyItemChanged(currentItem - 1);
+            }
+        } else if (currentItem == getChildCount() - 1) {
+            if ((currentItem + 1) < getAdapter().getItemCount()) {
+                getAdapter().notifyItemChanged(currentItem + 1);
+            }
+        }
+    }
+
     @Override
     public void setLayoutManager(LayoutManager layout) {
         if (!(layout instanceof LinearLayoutManager)) {
             throw new IllegalLayoutManagerException();
         }
         super.setLayoutManager(layout);
+    }
+
+    public LinearLayoutManager getLinearLayoutManager() {
+        return (LinearLayoutManager) getLayoutManager();
     }
 
     private static class IllegalLayoutManagerException extends IllegalArgumentException {
@@ -99,11 +128,11 @@ public class NoteFragmentRecyclerView extends RecyclerView {
 
     }
 
-    private class RowAnimationOnListener implements Animator.AnimatorListener {
+    private class RowAnimationListener implements Animator.AnimatorListener {
 
         private int position, duration, targetX;
 
-        public RowAnimationOnListener(int position, int duration, int targetX) {
+        public RowAnimationListener(int position, int duration, int targetX) {
             this.position = position;
             this.duration = duration;
             this.targetX = targetX;
@@ -115,7 +144,9 @@ public class NoteFragmentRecyclerView extends RecyclerView {
 
         @Override
         public void onAnimationEnd(Animator animation) {
-            getAdapter().notifyItemChanged(position);
+            int currentItem = getLinearLayoutManager().findFirstVisibleItemPosition() + position;
+            getAdapter().notifyItemChanged(currentItem);
+            notifyRowsPeripheralToVisibleItemsDataChanged(position);
             animateOn(position, duration, targetX);
         }
 

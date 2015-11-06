@@ -20,7 +20,7 @@ public class DeleteTask extends AsyncTask<Void, Void, Void> {
     @Override
     protected void onPostExecute(Void aVoid) {
         //ToDo Run LoadTask to refresh data...but no need to update UI?
-        //((NoteFragmentCallbacks)weakReference.get()).launchLoadCursorTask();
+        //((AllNotesFragmentCallbacks)weakReference.get()).launchLoadCursorTask();
     }
 
     @Override

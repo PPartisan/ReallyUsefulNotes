@@ -16,13 +16,13 @@ import com.werdpressed.partisan.reallyusefulnotes.designlibrary.notehelper.NoteR
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
-public class NoteFragmentAdapter extends RecyclerView.Adapter<NoteFragmentAdapter.ViewHolder>
+public class AllNotesFragmentAdapter extends RecyclerView.Adapter<AllNotesFragmentAdapter.ViewHolder>
         implements NoteRowItemTouchHelperAdapter{
 
-    private WeakReference<NoteFragmentCallbacks> mWeakCallback;
+    private WeakReference<AllNotesFragmentCallbacks> mWeakCallback;
     private ArrayList<NoteRowItem> mItems;
 
-    public NoteFragmentAdapter(NoteFragmentCallbacks callback) {
+    public AllNotesFragmentAdapter(AllNotesFragmentCallbacks callback) {
         mWeakCallback = new WeakReference<>(callback);
         mItems = mWeakCallback.get().requestNotes();
     }
@@ -93,13 +93,13 @@ public class NoteFragmentAdapter extends RecyclerView.Adapter<NoteFragmentAdapte
 
         private static final String TAG = "ViewHolder";
 
-        private NoteFragmentCallbacks mCallback;
+        private AllNotesFragmentCallbacks mCallback;
 
         private ImageButton menu;
         private TextView title;
         private PopupMenu popup;
 
-        public ViewHolder(View itemView, NoteFragmentCallbacks callback) {
+        public ViewHolder(View itemView, AllNotesFragmentCallbacks callback) {
             super(itemView);
 
             mCallback = callback;

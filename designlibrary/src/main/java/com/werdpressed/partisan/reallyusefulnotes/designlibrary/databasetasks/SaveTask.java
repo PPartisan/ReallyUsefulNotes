@@ -1,13 +1,9 @@
 package com.werdpressed.partisan.reallyusefulnotes.designlibrary.databasetasks;
 
 import android.content.ContentValues;
-import android.content.Context;
 import android.os.AsyncTask;
 
-import com.werdpressed.partisan.reallyusefulnotes.designlibrary.NoteFragmentCallbacks;
 import com.werdpressed.partisan.reallyusefulnotes.designlibrary.NoteRowItem;
-
-import java.lang.ref.WeakReference;
 
 public class SaveTask extends AsyncTask<NoteRowItem, Void, Void> {
 

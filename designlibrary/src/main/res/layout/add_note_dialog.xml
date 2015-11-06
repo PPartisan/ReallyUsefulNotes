@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<com.werdpressed.partisan.reallyusefulnotes.designlibrary.view.CircularRevealLinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:layout_width="match_parent"
@@ -32,4 +32,4 @@
         android:layout_marginRight="@dimen/material_margin_standard"
         android:id="@+id/and_title_entry"/>
 
-</RelativeLayout>
+</com.werdpressed.partisan.reallyusefulnotes.designlibrary.view.CircularRevealLinearLayout>

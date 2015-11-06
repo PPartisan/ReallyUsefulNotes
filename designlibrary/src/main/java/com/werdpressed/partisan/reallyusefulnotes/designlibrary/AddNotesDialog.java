@@ -3,7 +3,11 @@ package com.werdpressed.partisan.reallyusefulnotes.designlibrary;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.EditText;
+
+import com.werdpressed.partisan.reallyusefulnotes.designlibrary.view.CircularRevealLinearLayout;
 
 import java.lang.ref.WeakReference;
 

@@ -2,7 +2,7 @@ package com.werdpressed.partisan.reallyusefulnotes.designlibrary;
 
 import java.util.ArrayList;
 
-public interface NoteFragmentCallbacks {
+public interface AllNotesFragmentCallbacks {
 
     ArrayList<NoteRowItem> requestNotes();
 
